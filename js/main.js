@@ -1,8 +1,7 @@
 
-
-//
+//Some code modified from mozdev.github.io's phaser tutorial
 // hero sprite
-//
+
 function Hero(game, x, y) {
     Phaser.Sprite.call(this, game, x, y, 'hero');
     this.anchor.set(0.5, 0.5);
@@ -384,6 +383,7 @@ PlayState._onHeroVsEnemy = function (hero, enemy) {
     }
 };
 
+//adds retro font for score display
 PlayState._createHud = function () {
     const NUMBERS_STR = '0123456789X ';
     this.coinFont = this.game.add.retroFont('font:numbers', 20, 26,
@@ -403,7 +403,8 @@ PlayState._createHud = function () {
 
 
 
-
+//onload start game
+//defines game states
 window.onload = function () {
     let game = new Phaser.Game(960, 600, Phaser.AUTO, 'game');
     game.state.add('play', PlayState);
