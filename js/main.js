@@ -193,7 +193,7 @@ PlayState.preload = function () {
     this.game.load.image('icon:coin', 'images/coin_icon.png');
 
     this.game.load.spritesheet('coin', 'images/coin_animated.png', 22, 22);
-    this.game.load.spritesheet('spider', 'images/spider.png', 42, 32);
+    this.game.load.spritesheet('spider', 'images/loans.png', 42, 45);
     this.game.load.spritesheet('hero', 'images/hero.png', 36, 42);
 
     this.game.load.audio('sfx:jump', 'audio/jump.wav');
