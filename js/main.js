@@ -229,7 +229,7 @@ PlayState.create = function () {
     var me = this;
 
     me.startTime = new Date();
-    me.totalTime = 10;
+    me.totalTime = 60;
     me.timeElapsed = 0;
 
     me.createTimer();
