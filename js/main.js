@@ -173,7 +173,7 @@ PlayState.init = function () {
         }
     }, this);
 
-    this.coinPickupCount = 0;
+    this.coinPickupCount = -100;
 };
 
 PlayState.preload = function () {
@@ -385,7 +385,7 @@ PlayState._onHeroVsEnemy = function (hero, enemy) {
 
 //adds retro font for score display
 PlayState._createHud = function () {
-    const NUMBERS_STR = '0123456789X ';
+    const NUMBERS_STR = '0123456789X-';
     this.coinFont = this.game.add.retroFont('font:numbers', 20, 26,
         NUMBERS_STR);
 
