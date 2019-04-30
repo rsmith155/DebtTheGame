@@ -211,7 +211,7 @@ PlayState.create = function () {
         jump: this.game.add.audio('sfx:jump'),
         coin: this.game.add.audio('sfx:coin'),
         stomp: this.game.add.audio('sfx:stomp')
-        money: this.game.add.audio('sfx:money')
+       
     };
     this.bgm = this.game.add.audio('money');
     this.bgm.loopFull();
