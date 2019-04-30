@@ -173,7 +173,7 @@ PlayState.init = function () {
         }
     }, this);
 
-    this.coinPickupCount = -100;
+    this.coinPickupCount = -60;
     this.sfx.money.play();
 };
 
@@ -199,7 +199,8 @@ PlayState.preload = function () {
     this.game.load.audio('sfx:jump', 'audio/jump.wav');
     this.game.load.audio('sfx:coin', 'audio/coin.wav');
     this.game.load.audio('sfx:stomp', 'audio/stomp.wav');
-    this.game.load.audio('sfx:money', 'audio/money.mp3');
+    this.game.load.audio('bgm', 'audio/money.mp3');
+    
 
 
 };
@@ -212,6 +213,8 @@ PlayState.create = function () {
         stomp: this.game.add.audio('sfx:stomp')
         money: this.game.add.audio('sfx:money')
     };
+    this.bgm = this.game.add.audio('money');
+    this.bgm.loopFull();
 
     // create level
     this.game.add.image(0, 0, 'background');
