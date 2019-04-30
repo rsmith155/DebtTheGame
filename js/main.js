@@ -79,10 +79,10 @@ Hero.prototype._getAnimationName = function () {
 };
 
 //
-// Spider (enemy)
+// CarLoan (enemy)
 //
-function Spider(game, x, y) {
-    Phaser.Sprite.call(this, game, x, y, 'spider');
+function CarLoan(game, x, y) {
+    Phaser.Sprite.call(this, game, x, y, 'CarLoan');
 
     // anchor
     this.anchor.set(0.5);
@@ -94,26 +94,26 @@ function Spider(game, x, y) {
     // physic properties
     this.game.physics.enable(this);
     this.body.collideWorldBounds = true;
-    this.body.velocity.x = Spider.SPEED;
+    this.body.velocity.x = CarLoan.SPEED;
 }
 
-Spider.SPEED = 100;
+CarLoan.SPEED = 100;
 
 // inherit from Phaser.Sprite
-Spider.prototype = Object.create(Phaser.Sprite.prototype);
-Spider.prototype.constructor = Spider;
+CarLoan.prototype = Object.create(Phaser.Sprite.prototype);
+CarLoan.prototype.constructor = CarLoan;
 
-Spider.prototype.update = function () {
+CarLoan.prototype.update = function () {
     // check against walls and reverse direction if necessary
     if (this.body.touching.right || this.body.blocked.right) {
-        this.body.velocity.x = -Spider.SPEED; // turn left
+        this.body.velocity.x = -CarLoan.SPEED; // turn left
     }
     else if (this.body.touching.left || this.body.blocked.left) {
-        this.body.velocity.x = Spider.SPEED; // turn right
+        this.body.velocity.x = CarLoan.SPEED; // turn right
     }
 };
 
-Spider.prototype.die = function () {
+CarLoan.prototype.die = function () {
     this.body.enable = false;
 
     this.animations.play('die').onComplete.addOnce(function () {
@@ -163,7 +163,7 @@ PlayState.preload = function () {
     this.game.load.image('icon:coin', 'images/coin_icon.png');
 
     this.game.load.spritesheet('coin', 'images/coin_animated.png', 22, 22);
-    this.game.load.spritesheet('spider', 'images/spider.png', 42, 32);
+    this.game.load.spritesheet('CarLoan', 'images/CarLoan.png', 42, 32);
     this.game.load.spritesheet('hero', 'images/hero.png', 36, 42);
 
     this.game.load.audio('sfx:jump', 'audio/jump.wav');
@@ -195,13 +195,13 @@ PlayState.update = function () {
 };
 
 PlayState._handleCollisions = function () {
-    this.game.physics.arcade.collide(this.spiders, this.platforms);
-    this.game.physics.arcade.collide(this.spiders, this.enemyWalls);
+    this.game.physics.arcade.collide(this.CarLoans, this.platforms);
+    this.game.physics.arcade.collide(this.CarLoans, this.enemyWalls);
     this.game.physics.arcade.collide(this.hero, this.platforms);
 
     this.game.physics.arcade.overlap(this.hero, this.coins, this._onHeroVsCoin,
         null, this);
-    this.game.physics.arcade.overlap(this.hero, this.spiders,
+    this.game.physics.arcade.overlap(this.hero, this.CarLoans,
         this._onHeroVsEnemy, null, this);
 };
 
@@ -221,14 +221,14 @@ PlayState._loadLevel = function (data) {
     // create all the groups/layers that we need
     this.platforms = this.game.add.group();
     this.coins = this.game.add.group();
-    this.spiders = this.game.add.group();
+    this.CarLoans = this.game.add.group();
     this.enemyWalls = this.game.add.group();
     this.enemyWalls.visible = false;
 
     // spawn all platforms
     data.platforms.forEach(this._spawnPlatform, this);
     // spawn hero and enemies
-    this._spawnCharacters({hero: data.hero, spiders: data.spiders});
+    this._spawnCharacters({hero: data.hero, CarLoans: data.CarLoans});
     // spawn important objects
     data.coins.forEach(this._spawnCoin, this);
 
@@ -260,10 +260,10 @@ PlayState._spawnEnemyWall = function (x, y, side) {
 };
 
 PlayState._spawnCharacters = function (data) {
-    // spawn spiders
-    data.spiders.forEach(function (spider) {
-        let sprite = new Spider(this.game, spider.x, spider.y);
-        this.spiders.add(sprite);
+    // spawn CarLoans
+    data.CarLoans.forEach(function (CarLoan) {
+        let sprite = new CarLoan(this.game, CarLoan.x, CarLoan.y);
+        this.CarLoans.add(sprite);
     }, this);
 
     // spawn hero
