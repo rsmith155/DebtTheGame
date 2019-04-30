@@ -174,7 +174,7 @@ PlayState.init = function () {
     }, this);
 
     this.coinPickupCount = -60;
-    this.sfx.money.play();
+    
 };
 
 PlayState.preload = function () {
