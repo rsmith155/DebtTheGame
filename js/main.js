@@ -199,7 +199,7 @@ PlayState.preload = function () {
     this.game.load.audio('sfx:jump', 'audio/jump.wav');
     this.game.load.audio('sfx:coin', 'audio/coin.wav');
     this.game.load.audio('sfx:stomp', 'audio/stomp.wav');
-    this.load.audio('sfx:money', '/assets/money.mp3');
+    this.load.audio('sfx:money', 'audio/money.mp3');
 
 
 };
