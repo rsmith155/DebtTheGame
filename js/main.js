@@ -1,6 +1,4 @@
-// =============================================================================
-// sprites
-// =============================================================================
+
 
 //
 // hero sprite
@@ -36,6 +34,7 @@ Hero.prototype.move = function (direction) {
     }
 };
 
+//jump parameters
 Hero.prototype.jump = function () {
     const JUMP_SPEED = 600;
     let canJump = this.body.touching.down;
@@ -47,6 +46,7 @@ Hero.prototype.jump = function () {
     return canJump;
 };
 
+//initialize bounce speed
 Hero.prototype.bounce = function () {
     const BOUNCE_SPEED = 200;
     this.body.velocity.y = -BOUNCE_SPEED;
@@ -126,7 +126,37 @@ Spider.prototype.die = function () {
 // game states
 // =============================================================================
 
+
+//defines Game Over state
+var gameOver = function(game) {}
+gameOver.prototype = {
+    create: function() {
+        var style = {
+            font: "32px Arial",
+            fill: "#ffff",
+            align: "center"
+        }
+        
+        var text = this.game.add.text(
+            this.game.width / 2, this.game.height / 2, "Game Over", style
+        );
+        
+        text.anchor.set(0.5);
+        this.game.input.onDown.add(this.restartGame, this);
+    },
+
+    restartGame: function() {
+        this.game.state.restart();
+    }
+}
+
+
+
+//Define initial playstate
 PlayState = {};
+
+
+
 
 PlayState.init = function () {
     this.game.renderer.renderSession.roundPixels = true;
@@ -169,6 +199,8 @@ PlayState.preload = function () {
     this.game.load.audio('sfx:jump', 'audio/jump.wav');
     this.game.load.audio('sfx:coin', 'audio/coin.wav');
     this.game.load.audio('sfx:stomp', 'audio/stomp.wav');
+
+
 };
 
 PlayState.create = function () {
@@ -185,13 +217,65 @@ PlayState.create = function () {
 
     // crete hud with scoreboards)
     this._createHud();
+
+  
+    //adds timer to world
+    this.timeLabel = this.game.add.text(this.game.world.centerX, 100, "00:00", {font: " 80px Arial", fill: "#fff"}); 
+    this.timeLabel.anchor.setTo(0.5, 1);
+    this.timeLabel.align = 'center';
+
+
+    //initialize timer
+    var me = this;
+
+    me.startTime = new Date();
+    me.totalTime = 10;
+    me.timeElapsed = 0;
+
+    me.createTimer();
+
+    me.gameTimer = game.time.events.loop(100, function(){
+        me.updateTimer();
+    });
+
 };
+
 
 PlayState.update = function () {
     this._handleCollisions();
     this._handleInput();
 
     this.coinFont.text = `x${this.coinPickupCount}`;
+
+    var me = this;
+
+    var currentTime = new Date();
+    var timeDifference = me.startTime.getTime() - currentTime.getTime();
+
+     //Time elapsed in seconds
+    me.timeElapsed = Math.abs(timeDifference / 1000);
+
+     //Time remaining in seconds
+    var timeRemaining = me.totalTime - me.timeElapsed; 
+
+    //Convert seconds into minutes and seconds
+    var minutes = Math.floor(timeRemaining / 60);
+    var seconds = Math.floor(timeRemaining) - (60 * minutes);
+
+    //Display minutes, add a 0 to the start if less than 10
+    var result = (minutes < 10) ? "0" + minutes : minutes; 
+
+    //Display seconds, add a 0 to the start if less than 10
+    result += (seconds < 10) ? ":0" + seconds : ":" + seconds; 
+
+    me.timeLabel.text = result;
+
+    if(me.timeElapsed >= me.totalTime){
+        
+        this.game.state.start('GameOver');
+    }
+
+
 };
 
 PlayState._handleCollisions = function () {
@@ -310,18 +394,20 @@ PlayState._createHud = function () {
         coinIcon.height / 2, this.coinFont);
     coinScoreImg.anchor.set(0, 0.5);
 
+
     this.hud = this.game.add.group();
     this.hud.add(coinIcon);
     this.hud.add(coinScoreImg);
     this.hud.position.set(10, 10);
 };
 
-// =============================================================================
-// entry point
-// =============================================================================
+
+
 
 window.onload = function () {
     let game = new Phaser.Game(960, 600, Phaser.AUTO, 'game');
     game.state.add('play', PlayState);
+    game.state.add('GameOver', gameOver);
     game.state.start('play');
+    
 };
