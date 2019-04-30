@@ -172,7 +172,6 @@ PlayState.init = function () {
             this.sfx.jump.play();
         }
     }, this);
-
     this.coinPickupCount = -60;
     
 };
@@ -211,8 +210,8 @@ PlayState.create = function () {
         jump: this.game.add.audio('sfx:jump'),
         coin: this.game.add.audio('sfx:coin'),
         stomp: this.game.add.audio('sfx:stomp')
-       
     };
+    
     this.bgm = this.game.add.audio('money');
     this.bgm.loopFull();
 
@@ -405,6 +404,10 @@ PlayState._createHud = function () {
     this.hud.add(coinIcon);
     this.hud.add(coinScoreImg);
     this.hud.position.set(10, 10);
+};
+
+PlayState.shutdown = function () {
+    this.bgm.stop();
 };
 
 
