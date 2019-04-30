@@ -174,6 +174,7 @@ PlayState.init = function () {
     }, this);
 
     this.coinPickupCount = -100;
+    this.money.play();
 };
 
 PlayState.preload = function () {
@@ -198,6 +199,7 @@ PlayState.preload = function () {
     this.game.load.audio('sfx:jump', 'audio/jump.wav');
     this.game.load.audio('sfx:coin', 'audio/coin.wav');
     this.game.load.audio('sfx:stomp', 'audio/stomp.wav');
+    this.load.audio('bgm', '/assets/money.mp3');
 
 
 };
@@ -208,6 +210,7 @@ PlayState.create = function () {
         jump: this.game.add.audio('sfx:jump'),
         coin: this.game.add.audio('sfx:coin'),
         stomp: this.game.add.audio('sfx:stomp')
+        money: this.game.add.audio('sfx:money')
     };
 
     // create level
