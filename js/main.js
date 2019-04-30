@@ -212,7 +212,7 @@ PlayState.create = function () {
         stomp: this.game.add.audio('sfx:stomp')
     };
     
-    this.bgm = this.game.add.audio('money');
+    this.bgm = this.game.add.audio('bgm');
     this.bgm.loopFull();
 
     // create level
